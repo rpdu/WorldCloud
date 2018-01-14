@@ -18,14 +18,15 @@ library(shiny);
 #load txt file available at MaxMind.com web site
 #https://www.maxmind.com/en/free-world-cities-database?pkit_lang=en
 #specifically: http://download.maxmind.com/download/worldcities/worldcitiespop.txt.gz
+#"This product includes data created by MaxMind, available from http://www.maxmind.com/"
 
-if (!file.exists("./worldcitiespop.txt.gz")){
-        fileURL <- "http://download.maxmind.com/download/worldcities/worldcitiespop.txt.gz"
-        download.file(fileURL,destfile = "./worldcitiespop.txt.gz")
-        
-}
+#if (!file.exists("./worldcitiespop.txt.gz")){
+#        fileURL <- "http://download.maxmind.com/download/worldcities/worldcitiespop.txt.gz"
+#        download.file(fileURL,destfile = "./worldcitiespop.txt.gz")
+#}
 
-df_file <- read.csv("./worldcitiespop.txt.gz", header = TRUE, sep = ",", quote = "",na.strings="",  stringsAsFactors=FALSE)
+# change df_file <- read.csv("./worldcitiespop.txt.gz", to df_file <- read.csv("worldcitiespop.txt.gz",
+df_file <- read.csv("worldcitiespop.txt.gz", header = TRUE, sep = ",", quote = "",na.strings="",  stringsAsFactors=FALSE)
 df_file <- df_file %>% drop_na(Population)
 df_file$City <- gsub('"', '', df_file$City)
 
@@ -49,7 +50,7 @@ df_mrg<-rename(df_mrg, lat=Latitude, lng=Longitude) # rename for use with Leafle
 rm(df_file)
 
 #reduce number of countries to those having a city with a listed population 
-countrycodes_table<-subset(df_mrg, Country == countrycodes_table$Country, 
+countrycodes_table<-subset(df_mrg, Country %in% countrycodes_table$Country, 
                            select = c(Country,Country_name))
 
 # The list of countries available for selection input

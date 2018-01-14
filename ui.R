@@ -17,7 +17,8 @@ shinyUI(fluidPage(
                        br(),
                        h3("WorLd Cloud - Cities by Population"),
                        plotOutput("WCloud"),
-                       helpText("Maximise display window for best view.")
+                       helpText("Maximise display window for best view."),
+                       helpText("This product includes data created by MaxMind, available from http://www.maxmind.com/")
                        
                        
                 ),
