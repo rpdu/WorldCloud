@@ -1,9 +1,9 @@
 # WorldCloud - educational app for Coursera - Developing Data Products Course
 # Week4 - Peer-graded Assignment: Course Project: Shiny Application and Reproducible Pitch
 # global.r file
-# pduchesne 14-JAN-2018
+# pduchesne 03-FEB-2018
 set.seed=(29092015)
-
+#setwd("~/Git/Developing_Data_Products/Developing_Data_Products/Week4/WorldCloud")
 
 library(rvest);
 library(dplyr);
@@ -46,6 +46,7 @@ countrycodes_table$Country <- tolower(countrycodes_table$Country)
 #merge both sources together
 df_mrg<-merge(df_file, countrycodes_table, "Country")
 df_mrg<-rename(df_mrg, lat=Latitude, lng=Longitude) # rename for use with Leaflet
+rm(df_file)
 
 #reduce number of countries to those having a city with a listed population 
 countrycodes_table<-subset(df_mrg, Country == countrycodes_table$Country, 

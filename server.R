@@ -1,7 +1,7 @@
 # WorldCloud - educational app for Coursera - Developing Data Products Course
 # Week4 - Peer-graded Assignment: Course Project: Shiny Application and Reproducible Pitch
 # server.r file
-# pduchesne 14-JAN-2018
+# pduchesne 03-FEB-2018
 
 # This is the server logic of a Shiny web application. You can run the 
 # application by clicking 'Run App' above.
@@ -10,19 +10,13 @@
 # 
 #    http://shiny.rstudio.com/
 #
-
-
-# Define server logic required to draw a histogram
 shinyServer(function(input, output, session) {
         # Define a reactive expression
-        cities <- eventReactive(input$update,{ # Change when the "update" button is pressed...
-                #input$update
+        cities <- eventReactive(input$update,{ # Change when the "Display" button is pressed...
                 subset(df_mrg, Country == input$country, 
                        select = c(AccentCity, Population, lat, lng)
                        )
                         })
-        
-
 output$WCloud <- renderPlot({
         ct<-cities()
         par(mar = c(0,0,0,0))
@@ -41,14 +35,12 @@ output$citytable <- DT::renderDataTable({
         ct<-ct %>% arrange(desc(Population))
         DT::datatable(ct[drop = FALSE])
 })
-
 output$MapCities <- renderLeaflet({ #initial blank display
         ct <- cities()
         leaflet() %>%
         addTiles() %>%
         clearBounds()
 })
-
 observe({
         ct <- cities()
         leafletProxy("MapCities") %>% clearMarkers() %>% 
